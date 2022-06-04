@@ -24,6 +24,9 @@ app.use("/api", allRoutes);
 const authRouter = require("./routes/auth.routes");
 app.use("/auth", authRouter);
 
+const userRouter = require("./routes/user.routes");
+app.use("/api", isAuthenticated, userRouter);
+
 const projectRouter = require("./routes/project.routes");
 app.use("/api", isAuthenticated, projectRouter);
 

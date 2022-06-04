@@ -1,15 +1,17 @@
 const router = require("express").Router();
-
+/* const User = require("../models/User.model"); */
 const Project = require("../models/Project.model");
 const Comment = require("../models/Comment.model");
 
-router.post("/comments", (req, res, next) => {
-  const { author, content } = req.body;
+router.post("/projects/:projectId/comments", (req, res, next) => {
+  const { projectId } = req.params;
+  const { content } = req.body;
+  const { _id } = req.payload;
 
-  Comment.create({ author, content, project })
+  Comment.create({ author: _id, content })
     .then((newComment) => {
       return Project.findByIdAndUpdate(
-        project,
+        projectId,
         { $push: { comments: newComment._id } },
         { new: true }
       );
@@ -17,5 +19,12 @@ router.post("/comments", (req, res, next) => {
     .then((response) => res.json(response))
     .catch((err) => res.json(err));
 });
+
+
+router.delete("/projects/:projectId/comments", (req, res, next) => {
+  const { _id } = req.payload;
+  const 
+  const { projectId } = req.params;
+})
 
 module.exports = router;

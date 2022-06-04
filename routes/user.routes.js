@@ -1,42 +1,28 @@
-/* const router = require("express").Router();
-const fileUploader = require("../config/cloudinary.config");
+const router = require("express").Router();
+/* const fileUploader = require("../config/cloudinary.config"); */
 const User = require("../models/User.model");
 const Comment = require("../models/Comment.model");
-const Post = require("../models/Post.model");
 const { isAuthenticated } = require("../middleware/jwt.middleware");
-router.get("/user/:username", isAuthenticated, (req, res, next) => {
-  const { username } = req.params;
-  User.find({ username })
-    .populate("friends")
-    .populate("comments")
-    .populate("Posts")
-    .populate("Events")
-    .then((userFromDB) => res.status(200).json(userFromDB))
+
+router.get("/user", (req, res, next) => {
+  const { _id } = req.payload;
+  console.log(req.payload);
+  User.findById(_id)
+    .populate("createdProjects")
+    .then((user) => res.status(200).json(user))
     .catch((err) => res.status(400).json({ message: "User not found!!" }));
 });
-router.get("/user/:username/friends", isAuthenticated, (req, res, next) => {
-  const { username } = req.params;
-  User.find({ username })
-    .populate("friends")
-    .then((foundUser) => {
-      res.status(200).json(foundUser);
-    })
-    .catch((err) => res.status(400).json({ message: "Friends not found!" }));
-});
 
-router.put(
-  "/user/:userId",
-  isAuthenticated,
+/* router.put(
+  "/user",
   fileUploader.single("userImage"),
   (req, res, next) => {
-    const { userId } = req.params;
-    const { username, email, password } = req.body;
+    const { _id } = req.payload
     if (req.file) {
       User.findByIdAndUpdate(
         userId,
         {
           username,
-          email,
           imageUrl: req.file.path,
         },
         { new: true }
@@ -48,7 +34,7 @@ router.put(
         userId,
         {
           username,
-          email,
+          img,
         },
         { new: true }
       )
@@ -57,6 +43,6 @@ router.put(
         .catch((err) => res.status(400).json({ message: "No user updated" }));
     }
   }
-);
+); */
 
-module.exports = router; */
+module.exports = router;

@@ -20,11 +20,18 @@ router.post("/projects/:projectId/comments", (req, res, next) => {
     .catch((err) => res.json(err));
 });
 
-
-router.delete("/projects/:projectId/comments", (req, res, next) => {
+/* router.delete("/projects/:projectId/comments", (req, res, next) => {
   const { _id } = req.payload;
-  const 
+  const { content } = req.body;
   const { projectId } = req.params;
-})
+
+  Comment.findByIdAndRemove(newComment)
+  .then (() => {
+    return Project.findByIdAndUpdate(
+      projectId,
+      { $pull: {comments: content}}
+    )
+  })
+}) */
 
 module.exports = router;

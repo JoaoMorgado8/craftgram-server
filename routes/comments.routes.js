@@ -20,6 +20,14 @@ router.post("/projects/:projectId/comments", (req, res, next) => {
     .catch((err) => res.json(err));
 });
 
+router.get("/comments", (req, res, next) => {
+  //const { projectId } = req.params;
+
+  Comment.find()
+    .populate({ path: "author", populate: { path: "username" } })
+    .then((response) => res.json(response))
+    .catch((err) => res.json(err));
+});
 /* router.delete("/projects/:projectId/comments", (req, res, next) => {
   const { _id } = req.payload;
   const { content } = req.body;

@@ -8,7 +8,7 @@ router.post("/projects", (req, res, next) => {
 
   Project.create({ name, img, category, comments: [] })
     .then((createdProject) => {
-      console.log(createdProject, _id);
+      //console.log(createdProject, _id);
       return User.findByIdAndUpdate(
         _id,
         { $push: { createdProjects: createdProject._id } },
@@ -25,7 +25,10 @@ router.get("/projects", (req, res, next) => {
       path: "comments",
       populate: { path: "author" },
     })
-    .then((allProjects) => res.json(allProjects))
+    .then((allProjects) => {
+      // console.log({ allProjects });
+      res.json(allProjects);
+    })
     .catch((err) => res.json(err));
 });
 

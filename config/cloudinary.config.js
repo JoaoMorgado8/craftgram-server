@@ -9,7 +9,7 @@ cloudinary.config({
 });
 
 const storage = new CloudinaryStorage({
-  // cloudinary: cloudinary,
+  //cloudinary: cloudinary,
   cloudinary,
   params: {
     allowed_formats: ["jpg", "png"],
@@ -18,5 +18,5 @@ const storage = new CloudinaryStorage({
   },
 });
 
-//                     storage: storage
+// storage: storage;
 module.exports = multer({ storage });
